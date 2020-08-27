@@ -15,8 +15,8 @@ function Nav() {
             <a>Grocery</a>
           </Link>
           <HorizontalDivider />
-          <Link href="/orders">
-            <a>Meals</a>
+          <Link href="/mymeals">
+            <a>MyMeals</a>
           </Link>
           <HorizontalDivider />
           <Link href="/me">

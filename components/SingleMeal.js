@@ -11,7 +11,7 @@ import styled from "styled-components";
 import Head from "next/head";
 import CreateMealIngredientList from "./CreateMealIngredientList";
 import {CapatlizeFirstLetter} from '../lib/helpers'
-
+import {MY_MEALS_QUERY} from './MyMeals'
 
 const MealLogStyles = styled.div`
   float: none;
@@ -101,6 +101,8 @@ const SingleMealStyles = styled.div`
 const AddButton = styled.p`
   color: ${(props) => props.theme.lightBlue};
   justify-self: start;
+  font-weight: 600;
+  font-size: 1.75rem;
   margin: 0;
   padding: 0;
   &:hover {
@@ -114,6 +116,8 @@ const EditButton = styled.p`
   justify-self: end;
   margin: 0;
   padding: 0;
+  font-weight: 600;
+  font-size: 1.75rem;
   &:hover {
     cursor: pointer;
   }
@@ -244,6 +248,50 @@ function IngredientList({ ingredientList, userCreatedMeal, id }) {
   }
 }
 
+const ADD_MEAL_TO_GROCERY_LIST = gql`
+  mutation ADD_MEAL_TO_GROCERY_LIST($groceryList:[GroceryListsCreateInput], $mealId: ID!, $authorId: ID!) {
+    addIngredientsToGroceryList: createGroceryLists(data: $groceryList) {
+      id
+    }
+    addMealToMealList: createMealList(data:{meal:{connect:{id:$mealId}}, author:{connect:{id:$authorId}}}){
+    id
+  }
+  }
+`;
+
+
+function AddMealToGroceryList({ meal, me }) {
+  const { ingredientList } = meal;
+  const groceryListFormattedForMutation = ingredientList.map((ingredient) => {
+    return {
+      data: {
+        ingredient: { connect: { id: ingredient.ingredient.id } },
+        amount: { connect: { id: ingredient.amount.id } },
+        author: { connect: { id: me.id } },
+      },
+    };
+  });
+
+  const [createGroceryLists] = useMutation(ADD_MEAL_TO_GROCERY_LIST, {
+    variables: {
+      groceryList: groceryListFormattedForMutation,
+      mealId: meal.id,
+      authorId: me.id,
+    },
+    refetchQueries: () => [
+      { query: MY_MEALS_QUERY, variables: { authorId: me.id } },
+    ],
+    awaitRefetchQueries: true,
+    onCompleted: () => {
+      console.log("ADD_MEAL_TO_GROCERY_LIST COMPLETE");
+    },
+  });
+
+  return (
+    <AddButton onClick={createGroceryLists}>Add To Grocery List</AddButton>
+  );
+}
+
 function SingleMeal({ id }) {
   const me = useUser();
 
@@ -265,6 +313,7 @@ function SingleMeal({ id }) {
     }
   }
 
+  
   return (
     <>
       <SingleMealStyles>
@@ -278,7 +327,7 @@ function SingleMeal({ id }) {
             <h2>{Meal.name}</h2>
             <p>{Meal.description}</p>
             <div className="mealOptions">
-              <AddButton>Add To Grocery List</AddButton>
+              <AddMealToGroceryList meal={Meal} me={me} />
               {userCreatedMeal && (
                 <EditButton
                   onClick={() =>
@@ -457,7 +506,7 @@ function MealLogListEnteryNotEditing({ date, setIsEditing, thoughts }) {
         You made this meal on: {date}
       </p>
       <button onClick={setIsEditing}>{thoughts ? "Edit Comment" : "Write a Comment"}</button>
-      {thoughts && <TextArea disabled>{thoughts}</TextArea>}
+      {thoughts && <TextArea disabled value={thoughts} />}
     </MealLogListEnteryNotEditingStyle>
   );
 }
