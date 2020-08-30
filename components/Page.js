@@ -13,7 +13,7 @@ const theme = {
     maxWidth: '1000px',
     bs: '0 4px 40px 0 rgba(0, 0, 0, 0.25)',
     bsRaised: '0 10px 60px 0 rgba(0, 0, 0, 0.4)',
-
+    bsTight: '4px 4px 4px 4px rgba(0, 0, 0, 0.1)'
   };
   
   const StyledPage = styled.div`

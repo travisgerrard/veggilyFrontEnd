@@ -12,6 +12,7 @@
     "@apollo/link-error": "^2.0.0-beta.3",
     "@apollo/react-ssr": "^4.0.0-beta.1",
     "apollo-upload-client": "^13.0.0",
+    "downshift": "^6.0.5",
     "graphql": "^15.0.0",
     "next": "9.5.2",
     "next-with-apollo": "^5.0.1",
