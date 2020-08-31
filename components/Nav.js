@@ -19,7 +19,7 @@ function Nav() {
             <a>MyMeals</a>
           </Link>
           <HorizontalDivider />
-          <Link href="/me">
+          <Link href="/account">
             <a>Account</a>
           </Link>
           {/* <Signout /> */}

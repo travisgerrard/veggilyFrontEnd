@@ -305,6 +305,7 @@ function SingleMeal({ id }) {
   let userCreatedMeal = false;
   if (Meal.author) {
     if (me) {
+      console.log(me);
       if (me.id) {
         if(me.id === Meal.author.id) {
           userCreatedMeal = true
@@ -327,7 +328,7 @@ function SingleMeal({ id }) {
             <h2>{Meal.name}</h2>
             <p>{Meal.description}</p>
             <div className="mealOptions">
-              <AddMealToGroceryList meal={Meal} me={me} />
+              {me && <AddMealToGroceryList meal={Meal} me={me} />}
               {userCreatedMeal && (
                 <EditButton
                   onClick={() =>
