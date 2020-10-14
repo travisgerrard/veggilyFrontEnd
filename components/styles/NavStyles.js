@@ -9,12 +9,12 @@ const NavStyles = styled.ul`
   font-size: 2rem;
   a,
   button {
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
     display: flex;
     align-items: center;
     position: relative;
     font-weight: 900;
-    font-size: 1.25em;
+    font-size: 0.75em;
     background: none;
     border: 0;
     cursor: pointer;
@@ -54,13 +54,43 @@ const NavStyles = styled.ul`
         width: calc(100% - 60px);
       }
     }
+    @media (min-width: 320px) {
+      /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+    }
+    @media (min-width: 480px) {
+      /* smartphones, Android phones, landscape iPhone */
+    }
+    @media (min-width: 600px) {
+      /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+    }
+    @media (min-width: 801px) {
+      /* tablet, landscape iPad, lo-res laptops ands desktops */
+      font-weight: 900;
+      font-size: 1.25em;
+      a,
+      button {
+        padding: 1rem 2rem;
+      }
+    }
+    @media (min-width: 1025px) {
+      /* big landscape tablets, laptops, and desktops */
+      font-weight: 900;
+      font-size: 1.25em;
+      a,
+      button {
+        padding: 1rem 2rem;
+      }
+    }
+    @media (min-width: 1281px) {
+      /* hi-res laptops and desktops */
+      font-weight: 900;
+      font-size: 1.25em;
+      a,
+      button {
+        padding: 1rem 2rem;
+      }
+    }
   }
-  /* @media (max-width: 1300px) {
-    border-top: 1px solid ${props => props.theme.lightgrey};
-    width: 100%;
-    justify-content: center;
-    font-size: 1.5rem;
-  } */
 `;
 
 export default NavStyles;

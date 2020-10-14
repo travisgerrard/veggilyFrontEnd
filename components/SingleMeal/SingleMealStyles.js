@@ -9,6 +9,7 @@ const MealLogStyles = styled.div`
   margin-right: auto;
   max-width: 720px;
   margin-top: 64px;
+  margin-bottom: 64px;
   .topOfMealLog {
     max-height: 200px;
     display: grid;
@@ -43,7 +44,6 @@ const TopOfMeal = styled.div`
   display: flex;
   flex-direction: column;
   transition: border-color 0.25s ease-in-out;
-  padding: -20px;
   img {
     display: block;
     width: 100%;
@@ -173,7 +173,6 @@ const IngredientListStyle = styled.div`
   /* box-shadow: ${(props) => props.theme.bs}; */
   /* border-radius: 22px; */
   height: 44px;
-  padding-left: 22px;
   padding-right: 22px;
   display: grid;
   grid-template-columns: auto 40px;
@@ -181,9 +180,33 @@ const IngredientListStyle = styled.div`
   margin-bottom: 15px; */
   p {
     margin: 0;
-    padding: 0;
-    font-size: 24px;
+    padding-left: 1rem;
+    font-size: 1.75rem;
     font-weight: 600;
+    @media (min-width: 320px) {
+      /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+    }
+    @media (min-width: 480px) {
+      /* smartphones, Android phones, landscape iPhone */
+    }
+    @media (min-width: 600px) {
+      /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+    }
+    @media (min-width: 801px) {
+      /* tablet, landscape iPad, lo-res laptops ands desktops */
+      font-size: 2.25rem;
+      font-weight: 600;
+    }
+    @media (min-width: 1025px) {
+      /* big landscape tablets, laptops, and desktops */
+      font-size: 2.25rem;
+      font-weight: 600;
+    }
+    @media (min-width: 1281px) {
+      /* hi-res laptops and desktops */
+      font-size: 2.25rem;
+      font-weight: 600;
+    }
   }
   button {
     margin: 0;
@@ -199,16 +222,46 @@ const IngredientListStyle = styled.div`
 `;
 
 const TrashContainer = styled.div`
-  height: 42px;
-  width: 42px;
+  height: 36px;
+  width: 36px;
+  border-radius: 18px;
   padding-left: 1px;
   background-color: gray;
-  border-radius: 21px;
   display: flex;
   align-items: center;
   justify-content: center;
   &:hover {
     cursor: pointer;
+  }
+  @media (min-width: 320px) {
+    /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+  }
+  @media (min-width: 480px) {
+    /* smartphones, Android phones, landscape iPhone */
+  }
+  @media (min-width: 600px) {
+    /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+    height: 42px;
+    width: 42px;
+    border-radius: 21px;
+  }
+  @media (min-width: 801px) {
+    /* tablet, landscape iPad, lo-res laptops ands desktops */
+    height: 42px;
+    width: 42px;
+    border-radius: 21px;
+  }
+  @media (min-width: 1025px) {
+    /* big landscape tablets, laptops, and desktops */
+    height: 42px;
+    width: 42px;
+    border-radius: 21px;
+  }
+  @media (min-width: 1281px) {
+    /* hi-res laptops and desktops */
+    height: 42px;
+    width: 42px;
+    border-radius: 21px;
   }
 `;
 

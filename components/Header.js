@@ -1,9 +1,8 @@
-import Link from "next/link";
-import styled from "styled-components";
-import NProgress from "nprogress";
-import Router from "next/router";
+import Link from 'next/link';
+import styled from 'styled-components';
+import NProgress from 'nprogress';
+import Router from 'next/router';
 import Nav from './Nav';
-
 
 Router.onRouteChangeStart = () => {
   NProgress.start();
@@ -17,11 +16,10 @@ Router.onRouteChangeError = () => {
 };
 
 const Logo = styled.h1`
-  font-size: 4rem;
-  margin-left: 2rem;
   margin-top: 0;
   margin-bottom: 0;
   position: relative;
+  font-size: 2.5rem;
   z-index: 2;
   /* transform: skew(-10deg); */
   a {
@@ -29,22 +27,32 @@ const Logo = styled.h1`
     color: black;
     text-decoration: none;
   }
-  @media (max-width: 1300px) {
-    margin: 0;
-    text-align: center;
+
+  @media (min-width: 320px) {
+    /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+  }
+  @media (min-width: 480px) {
+    /* smartphones, Android phones, landscape iPhone */
+  }
+  @media (min-width: 600px) {
+    /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+  }
+  @media (min-width: 801px) {
+    /* tablet, landscape iPad, lo-res laptops ands desktops */
+    font-size: 4rem;
+    margin-left: 2rem;
+  }
+  @media (min-width: 1025px) {
+    /* big landscape tablets, laptops, and desktops */
+    font-size: 4rem;
+    margin-left: 2rem;
+  }
+  @media (min-width: 1281px) {
+    /* hi-res laptops and desktops */
+    font-size: 4rem;
+    margin-left: 2rem;
   }
 `;
-
-const TextButton = styled.h1`
-  font-size: 3rem;
-  position: relative;
-  a {
-    padding: 0.5rem 1rem;
-    color: black;
-    text-decoration: none;
-  }
-`;
-
 
 const StyledHeader = styled.header`
   display: grid;
