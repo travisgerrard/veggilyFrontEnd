@@ -1,7 +1,6 @@
+import SingleMeal from '../components/SingleMeal/SingleMeal';
 
-import SingleMeal from '../components/SingleMeal';
-
-const Item = props => (
+const Item = (props) => (
   <div>
     <SingleMeal id={props.query.id} />
   </div>

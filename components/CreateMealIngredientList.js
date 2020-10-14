@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
-import { graphql } from "@apollo/client";
-import { useQuery } from "@apollo/client";
-import styled from "styled-components";
-import gql from "graphql-tag";
-import useForm from "../lib/useForm";
-import Form from "./styles/Form";
-import Error from "./ErrorMessage";
-import { SINGLE_MEAL_QUERY } from "./SingleMeal";
-import Downshift from 'downshift'
-import {CapatlizeFirstLetter} from '../lib/helpers'
+import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { graphql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import styled from 'styled-components';
+import gql from 'graphql-tag';
+import useForm from '../lib/useForm';
+import Form from './styles/Form';
+import Error from './ErrorMessage';
+import { SINGLE_MEAL_QUERY } from './SingleMeal/SingleMealQueries';
+import Downshift from 'downshift';
+import { CapatlizeFirstLetter } from '../lib/helpers';
 
 const ADD_MEAL_INGREDIENT_LIST = gql`
   mutation ADD_MEAL_INGREDIENT_LIST(
@@ -43,15 +43,15 @@ const SEARCH_FOR_AMOUNT = gql`
 function CreateMealIngredientList({ mealId }) {
   const { inputs, handleChange, resetForm } = useForm({
     id: mealId,
-    amount: "",
-    ingredient: "",
+    amount: '',
+    ingredient: '',
   });
-  const [amount, setAmount] = useState("")
-  const [ingredient, setIngredient] = useState("")
+  const [amount, setAmount] = useState('');
+  const [ingredient, setIngredient] = useState('');
   const [addMealIngredientList, { loading, error }] = useMutation(
     ADD_MEAL_INGREDIENT_LIST,
     {
-      variables: {id: mealId, amount, ingredient},
+      variables: { id: mealId, amount, ingredient },
       refetchQueries: () => [
         { query: SINGLE_MEAL_QUERY, variables: { id: mealId } },
       ],
@@ -65,13 +65,19 @@ function CreateMealIngredientList({ mealId }) {
       onSubmit={async (e) => {
         e.preventDefault();
         await addMealIngredientList();
-        setIngredient("");
-        setAmount("");
+        setIngredient('');
+        setAmount('');
         resetForm();
       }}
     >
       <fieldset>
-        <Downshift  selectedItem={amount && CapatlizeFirstLetter(amount)} onInputValueChange={inputValue => {setAmount(inputValue)}} style={{width: '100%'}}>
+        <Downshift
+          selectedItem={amount && CapatlizeFirstLetter(amount)}
+          onInputValueChange={(inputValue) => {
+            setAmount(inputValue);
+          }}
+          style={{ width: '100%' }}
+        >
           {({
             getInputProps,
             getItemProps,
@@ -82,30 +88,40 @@ function CreateMealIngredientList({ mealId }) {
             isOpen,
           }) => (
             <div>
-              <input {...getInputProps({
-                placeholder: 'Amount',
-                name: 'amount',
-              })}
-              required />
-              {amount && <div style={{position: 'relative'}}>
-              {isOpen ? (
-                <SearchBoxStyled>
-                  <ApolloAutocompleteMenuAmount
-                    {...{
-                      inputValue,
-                      selectedItem,
-                      highlightedIndex,
-                      getItemProps,
-                    }}
-                  />
-                </SearchBoxStyled>
-              ) : null}
-              </div>}
+              <input
+                {...getInputProps({
+                  placeholder: 'Amount',
+                  name: 'amount',
+                })}
+                required
+              />
+              {amount && (
+                <div style={{ position: 'relative' }}>
+                  {isOpen ? (
+                    <SearchBoxStyled>
+                      <ApolloAutocompleteMenuAmount
+                        {...{
+                          inputValue,
+                          selectedItem,
+                          highlightedIndex,
+                          getItemProps,
+                        }}
+                      />
+                    </SearchBoxStyled>
+                  ) : null}
+                </div>
+              )}
             </div>
           )}
         </Downshift>
-       
-        <Downshift  selectedItem={ingredient && CapatlizeFirstLetter(ingredient)} onInputValueChange={inputValue => {setIngredient(inputValue)}} style={{width: '100%'}}>
+
+        <Downshift
+          selectedItem={ingredient && CapatlizeFirstLetter(ingredient)}
+          onInputValueChange={(inputValue) => {
+            setIngredient(inputValue);
+          }}
+          style={{ width: '100%' }}
+        >
           {({
             getInputProps,
             getItemProps,
@@ -116,25 +132,29 @@ function CreateMealIngredientList({ mealId }) {
             isOpen,
           }) => (
             <div>
-              <input {...getInputProps({
-                placeholder: 'Ingredient',
-                name: 'ingredient',
-              })}
-              required />
-              {ingredient && <div style={{position: 'relative'}}>
-              {isOpen ? (
-                <SearchBoxStyled>
-                  <ApolloAutocompleteMenuIngredient
-                    {...{
-                      inputValue,
-                      selectedItem,
-                      highlightedIndex,
-                      getItemProps,
-                    }}
-                  />
-                </SearchBoxStyled>
-              ) : null}
-              </div>}
+              <input
+                {...getInputProps({
+                  placeholder: 'Ingredient',
+                  name: 'ingredient',
+                })}
+                required
+              />
+              {ingredient && (
+                <div style={{ position: 'relative' }}>
+                  {isOpen ? (
+                    <SearchBoxStyled>
+                      <ApolloAutocompleteMenuIngredient
+                        {...{
+                          inputValue,
+                          selectedItem,
+                          highlightedIndex,
+                          getItemProps,
+                        }}
+                      />
+                    </SearchBoxStyled>
+                  ) : null}
+                </div>
+              )}
             </div>
           )}
         </Downshift>
@@ -143,7 +163,6 @@ function CreateMealIngredientList({ mealId }) {
     </Form>
   );
 }
-
 
 function ApolloAutocompleteMenuAmount({
   inputValue,
@@ -158,24 +177,24 @@ function ApolloAutocompleteMenuAmount({
   if (loading) return <p>Loading...</p>;
 
   if (loading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
   return (
     <SearchBoxStyled>
       {data.allAmounts.map(({ name: item }, index) => (
         <>
-        <SearchItemStyled
-          highlightedIndex={highlightedIndex === index}
-          selectedItem={selectedItem === item}
-          {...getItemProps({
-            item,
-            index,
-            key: item,
-          })}
-        >
-          {CapatlizeFirstLetter(item)}
-        </SearchItemStyled>
-        {data.allAmounts.length-1 !== index && <HorizontalDivider />}
+          <SearchItemStyled
+            highlightedIndex={highlightedIndex === index}
+            selectedItem={selectedItem === item}
+            {...getItemProps({
+              item,
+              index,
+              key: item,
+            })}
+          >
+            {CapatlizeFirstLetter(item)}
+          </SearchItemStyled>
+          {data.allAmounts.length - 1 !== index && <HorizontalDivider />}
         </>
       ))}
     </SearchBoxStyled>
@@ -195,24 +214,24 @@ function ApolloAutocompleteMenuIngredient({
   if (loading) return <p>Loading...</p>;
 
   if (loading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
   return (
     <SearchBoxStyled>
       {data.allIngredients.map(({ name: item }, index) => (
         <>
-        <SearchItemStyled
-          highlightedIndex={highlightedIndex === index}
-          selectedItem={selectedItem === item}
-          {...getItemProps({
-            item,
-            index,
-            key: item,
-          })}
-        >
-          {CapatlizeFirstLetter(item)}
-        </SearchItemStyled>
-        {data.allIngredients.length-1 !== index && <HorizontalDivider />}
+          <SearchItemStyled
+            highlightedIndex={highlightedIndex === index}
+            selectedItem={selectedItem === item}
+            {...getItemProps({
+              item,
+              index,
+              key: item,
+            })}
+          >
+            {CapatlizeFirstLetter(item)}
+          </SearchItemStyled>
+          {data.allIngredients.length - 1 !== index && <HorizontalDivider />}
         </>
       ))}
     </SearchBoxStyled>
@@ -221,7 +240,7 @@ function ApolloAutocompleteMenuIngredient({
 
 const SearchBoxStyled = styled.div`
   position: absolute;
-  background: rgb(255,255,255, 0.75);
+  background: rgb(255, 255, 255, 0.75);
   backdrop-filter: blur(4px);
   width: 100%;
   border-radius: 22px;
@@ -231,8 +250,8 @@ const SearchBoxStyled = styled.div`
 
 const SearchItemStyled = styled.div`
   background-color: ${(props) =>
-    props.highlightedIndex ? "rgb(0,0,0, 0.05)" : "transparent"};
-  font-weight: ${(props) => (props.highlightedIndex ? "600" : "300")};
+    props.highlightedIndex ? 'rgb(0,0,0, 0.05)' : 'transparent'};
+  font-weight: ${(props) => (props.highlightedIndex ? '600' : '300')};
   font-size: 20px;
   padding-left: 16px;
   padding-top: 4px;
@@ -252,7 +271,6 @@ const SearchItemStyled = styled.div`
     padding-bottom: 8px;
     border-bottom-width: 0px;
   }
-  
 `;
 
 const HorizontalDivider = styled.div`

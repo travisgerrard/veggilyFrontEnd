@@ -1,18 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Link from "next/link";
-import Title from "./styles/Title";
-import MealStyles from "./styles/MealStyles";
-import VerticalDivider from "./styles/VerticalDivider";
-import styled from "styled-components";
-
-
+import React from 'react';
+import PropTypes from 'prop-types';
+import Link from 'next/link';
+import MealStyles from './styles/MealStyles';
 
 export default function Meal({ meal }) {
   return (
     <Link
       href={{
-        pathname: "/meal",
+        pathname: '/meal',
         query: { id: meal.id },
       }}
     >
@@ -21,13 +16,10 @@ export default function Meal({ meal }) {
           <img src={meal.mealImage.publicUrlTransformed} alt={meal.name} />
         )}
 
-        <VerticalDivider />
-
-        <Title>
-          <a>{meal.name}</a>
-          <p>{meal.description}</p>
-        </Title>
-        
+        <div className="overlay">
+          <p className="title">{meal.name}</p>
+          <p className="subtitle">{meal.description}</p>
+        </div>
       </MealStyles>
     </Link>
   );
