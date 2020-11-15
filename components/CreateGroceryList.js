@@ -1,10 +1,10 @@
-import React from "react";
-import { useMutation } from "@apollo/client";
-import gql from "graphql-tag";
-import useForm from "../lib/useForm";
-import Form from "./styles/Form";
-import Error from "./ErrorMessage";
-import { GET_GROCERY_LIST } from "./Grocery";
+import React from 'react';
+import { useMutation } from '@apollo/client';
+import gql from 'graphql-tag';
+import useForm from '../lib/useForm';
+import Form from './styles/Form';
+import Error from './ErrorMessage';
+import { GET_GROCERY_LIST } from '../graphql/queries';
 
 const ADD_GROCERY_LIST = gql`
   mutation ADD_GROCERY_LIST($ingredient: String!, $amount: String!) {
@@ -14,10 +14,10 @@ const ADD_GROCERY_LIST = gql`
   }
 `;
 
-function CreateGroceryList({id}) {
+function CreateGroceryList({ id }) {
   const { inputs, handleChange, resetForm } = useForm({
-    amount: "",
-    ingredient: "",
+    amount: '',
+    ingredient: '',
   });
   const [addGroceryList, { loading, error }] = useMutation(ADD_GROCERY_LIST, {
     variables: inputs,

@@ -1,44 +1,13 @@
-import React, { useEffect } from "react";
-import gql from "graphql-tag";
-import { useQuery } from "@apollo/client";
-import { useMutation } from "@apollo/client";
-import { useUser } from "./User";
-import styled from "styled-components";
-import { useRouter } from "next/router";
-import CreateGroceryList from './CreateGroceryList'
-import GroceryList from './GroceryList'
-
-const GET_GROCERY_LIST = gql`
-  query GET_GROCERY_LIST($id: ID!) {
-    groceryToComplete: allGroceryLists(where: { author: { id: $id }, isCompleted: false }) {
-      id
-      ingredient {
-        id
-        name
-      }
-      amount {
-        id
-        name
-      }
-      isCompleted
-      dateCompleted
-    }
-    groceryCompleted: allGroceryLists(where: { author: { id: $id }, isCompleted: true }) {
-      id
-      ingredient {
-        id
-        name
-      }
-      amount {
-        id
-        name
-      }
-      isCompleted
-      dateCompleted
-    }
-  }
-`;
-
+import React, { useEffect } from 'react';
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+import { useUser } from './User';
+import styled from 'styled-components';
+import { useRouter } from 'next/router';
+import CreateGroceryList from './CreateGroceryList';
+import GroceryList from './GroceryList/GroceryList';
+import { GET_GROCERY_LIST } from '../graphql/queries';
 
 const GroceryListContainer = styled.div`
   float: none;
@@ -69,7 +38,7 @@ function Grocery() {
 
   useEffect(() => {
     if (!me) {
-      router.push("/signin");
+      router.push('/signin');
     }
   }, [me]);
 
@@ -105,4 +74,3 @@ function Grocery() {
 }
 
 export default Grocery;
-export { GET_GROCERY_LIST };
