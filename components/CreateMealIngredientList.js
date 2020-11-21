@@ -46,6 +46,7 @@ function CreateMealIngredientList({ mealId }) {
     >
       <fieldset>
         <Downshift
+          id="amount-selector"
           selectedItem={amount && CapatlizeFirstLetter(amount)}
           onInputValueChange={(inputValue) => {
             setAmount(inputValue);
@@ -90,6 +91,7 @@ function CreateMealIngredientList({ mealId }) {
         </Downshift>
 
         <Downshift
+          id="ingreident-selector"
           selectedItem={ingredient && CapatlizeFirstLetter(ingredient)}
           onInputValueChange={(inputValue) => {
             setIngredient(inputValue);

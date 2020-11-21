@@ -44,6 +44,7 @@ function CreateGroceryList({ id }) {
     >
       <fieldset disabled={loading} aria-busy={loading}>
         <Downshift
+          id="amount-selector"
           selectedItem={amount && CapatlizeFirstLetter(amount)}
           onInputValueChange={(inputValue) => {
             setAmount(inputValue);
@@ -88,6 +89,7 @@ function CreateGroceryList({ id }) {
         </Downshift>
 
         <Downshift
+          id="ingreident-selector"
           selectedItem={ingredient && CapatlizeFirstLetter(ingredient)}
           onInputValueChange={(inputValue) => {
             setIngredient(inputValue);

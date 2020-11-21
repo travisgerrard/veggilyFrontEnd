@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import Router from 'next/router';
+import Link from 'next/link';
 import { VscTrash } from 'react-icons/vsc';
 
 import { useQuery } from '@apollo/client';
@@ -112,11 +113,13 @@ function IngredientList({ ingredientList, userCreatedMeal, id }) {
   if (ingredientList.length > 0) {
     return ingredientList.map((ingredient) => {
       return (
-        <>
-          <IngredientListStyle key={ingredient.id}>
+        <Fragment key={ingredient.id}>
+          <IngredientListStyle>
             <p>
               {CapatlizeFirstLetter(ingredient.amount.name)} -{' '}
-              {CapatlizeFirstLetter(ingredient.ingredient.name)}
+              <Link href={`/ingredient?id=${ingredient.ingredient.id}`}>
+                {CapatlizeFirstLetter(ingredient.ingredient.name)}
+              </Link>
             </p>
             {userCreatedMeal && (
               <DeleteMealIngredientList
@@ -127,7 +130,7 @@ function IngredientList({ ingredientList, userCreatedMeal, id }) {
             )}
           </IngredientListStyle>
           <hr />
-        </>
+        </Fragment>
       );
     });
   } else {
@@ -149,7 +152,7 @@ function DeleteMealIngredientList({
   });
   return (
     <TrashContainer onClick={deleteMealIngredientList}>
-      <VscTrash color="white" size="3rem" />
+      <VscTrash color="white" size="2em" />
     </TrashContainer>
   );
 }

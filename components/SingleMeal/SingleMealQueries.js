@@ -1,28 +1,32 @@
 import gql from 'graphql-tag';
 
 const SINGLE_MEAL_QUERY = gql`
+  fragment MealFragment on Meal {
+    id
+    name
+    description
+    mealImage {
+      publicUrlTransformed
+    }
+    author {
+      id
+    }
+    ingredientList {
+      id
+      ingredient {
+        id
+        name
+      }
+      amount {
+        id
+        name
+      }
+    }
+  }
+
   query SINGLE_MEAL_QUERY($id: ID!) {
     Meal(where: { id: $id }) {
-      id
-      name
-      description
-      mealImage {
-        publicUrlTransformed
-      }
-      author {
-        id
-      }
-      ingredientList {
-        id
-        ingredient {
-          id
-          name
-        }
-        amount {
-          id
-          name
-        }
-      }
+      ...MealFragment
     }
   }
 `;

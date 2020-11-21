@@ -1,0 +1,95 @@
+import React from 'react';
+import Head from 'next/head';
+import { useQuery } from '@apollo/client';
+import { CapatlizeFirstLetter } from '../../lib/helpers';
+import Meal from '../Meal';
+import { MealsList } from '../Meals';
+
+import {
+  SingleMealStyles,
+  TopOfMeal,
+  IngredientListStyle,
+  HorizontalDivider,
+} from '../SingleMeal/SingleMealStyles';
+
+import gql from 'graphql-tag';
+const GET_INGREDIENT_INFO = gql`
+  fragment MealFragment on Meal {
+    id
+    name
+    description
+    mealImage {
+      publicUrlTransformed
+    }
+    author {
+      id
+    }
+    ingredientList {
+      id
+      ingredient {
+        id
+        name
+      }
+      amount {
+        id
+        name
+      }
+    }
+  }
+
+  query GET_INGREDIENT_INFO($id: ID!) {
+    Ingredient(where: { id: $id }) {
+      name
+      category
+      meal {
+        ...MealFragment
+      }
+    }
+  }
+`;
+
+function SingleIngredient({ id }) {
+  console.log(id);
+  const { loading, error, data } = useQuery(GET_INGREDIENT_INFO, {
+    variables: { id },
+  });
+  console.log(error);
+  if (error) return <Error error={error} />;
+  if (loading) return <p>Loading...</p>;
+  console.log(data);
+  if (!data.Ingredient) return <p>No Ingredient Found for {id}</p>;
+
+  const { Ingredient } = data;
+  console.log(Ingredient);
+
+  function listOfMeals(meals) {
+    if (meals.length === 0) {
+      return <div>Ingredient is not in any meals</div>;
+    } else {
+      return (
+        <MealsList>
+          {meals.map((meal) => {
+            return (
+              <IngredientListStyle key={meal.id}>
+                <Meal meal={meal} key={meal.id} />
+              </IngredientListStyle>
+            );
+          })}
+        </MealsList>
+      );
+    }
+  }
+
+  return (
+    <>
+      <Head>
+        <title>Veggily | {Ingredient.name}</title>
+      </Head>
+      <h2 className="title">{CapatlizeFirstLetter(Ingredient.name)}</h2>
+      <h3>This ingredient is in the following meals:</h3>
+      {listOfMeals(Ingredient.meal)}
+    </>
+  );
+}
+
+export default SingleIngredient;
