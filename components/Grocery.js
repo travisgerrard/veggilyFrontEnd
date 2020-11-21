@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/client';
-import { useMutation } from '@apollo/client';
 import { useUser } from './User';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';

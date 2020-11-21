@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 import { CapatlizeFirstLetter } from '../../lib/helpers';
 import {
@@ -32,7 +32,6 @@ function GroceryList({ groceryToComplete, groceryCompleted, me }) {
       {sortedGroceryList.map((grocery, index) => {
         const category = grocery.ingredient.category;
         const obj = options.find((o) => o.value === category);
-        console.log(index);
 
         let showTitle = false;
         if (index === 0) {
@@ -47,7 +46,7 @@ function GroceryList({ groceryToComplete, groceryCompleted, me }) {
         }
 
         return (
-          <>
+          <Fragment key={index}>
             {showTitle && <div>{obj.label}</div>}
             <IngredientListStyle key={grocery.id}>
               <CompleteGroceryListButton
@@ -61,7 +60,7 @@ function GroceryList({ groceryToComplete, groceryCompleted, me }) {
                 {CapatlizeFirstLetter(grocery.amount.name)}
               </p>
             </IngredientListStyle>
-          </>
+          </Fragment>
         );
       })}
       {groceryCompleted.length > 0 && (

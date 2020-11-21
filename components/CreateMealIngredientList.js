@@ -1,44 +1,18 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { graphql } from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
-import gql from 'graphql-tag';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 import { SINGLE_MEAL_QUERY } from './SingleMeal/SingleMealQueries';
 import Downshift from 'downshift';
 import { CapatlizeFirstLetter } from '../lib/helpers';
-
-const ADD_MEAL_INGREDIENT_LIST = gql`
-  mutation ADD_MEAL_INGREDIENT_LIST(
-    $id: ID!
-    $ingredient: String!
-    $amount: String!
-  ) {
-    addMealIngredientList(id: $id, ingredient: $ingredient, amount: $amount) {
-      id
-    }
-  }
-`;
-
-const SEARCH_FOR_INGREDIENT = gql`
-  query SEARCH_FOR_INGREDIENT($inputValue: String) {
-    allIngredients(where: { name_starts_with: $inputValue }) {
-      id
-      name
-    }
-  }
-`;
-const SEARCH_FOR_AMOUNT = gql`
-  query SEARCH_FOR_AMOUNT($inputValue: String) {
-    allAmounts(where: { name_starts_with: $inputValue }) {
-      id
-      name
-    }
-  }
-`;
+import {
+  ADD_MEAL_INGREDIENT_LIST,
+  SEARCH_FOR_INGREDIENT,
+  SEARCH_FOR_AMOUNT,
+} from '../graphql/queries';
 
 function CreateMealIngredientList({ mealId }) {
   const { inputs, handleChange, resetForm } = useForm({
@@ -164,7 +138,7 @@ function CreateMealIngredientList({ mealId }) {
   );
 }
 
-function ApolloAutocompleteMenuAmount({
+export function ApolloAutocompleteMenuAmount({
   inputValue,
   selectedItem,
   highlightedIndex,
@@ -201,7 +175,7 @@ function ApolloAutocompleteMenuAmount({
   );
 }
 
-function ApolloAutocompleteMenuIngredient({
+export function ApolloAutocompleteMenuIngredient({
   inputValue,
   selectedItem,
   highlightedIndex,
@@ -238,7 +212,7 @@ function ApolloAutocompleteMenuIngredient({
   );
 }
 
-const SearchBoxStyled = styled.div`
+export const SearchBoxStyled = styled.div`
   position: absolute;
   background: rgb(255, 255, 255, 0.75);
   backdrop-filter: blur(4px);
@@ -248,7 +222,7 @@ const SearchBoxStyled = styled.div`
   margin-bottom: 24px;
 `;
 
-const SearchItemStyled = styled.div`
+export const SearchItemStyled = styled.div`
   background-color: ${(props) =>
     props.highlightedIndex ? 'rgb(0,0,0, 0.05)' : 'transparent'};
   font-weight: ${(props) => (props.highlightedIndex ? '600' : '300')};
