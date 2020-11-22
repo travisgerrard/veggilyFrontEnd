@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import { useQuery } from '@apollo/client';
 import { CapatlizeFirstLetter } from '../../lib/helpers';
-import Select from 'react-select';
 
 import Meal from '../Meal';
 import { MealsList } from '../Meals';
@@ -79,7 +78,6 @@ function SingleIngredient({ id }) {
   console.log(Ingredient);
   const category = Ingredient.category;
   const obj = options.find((o) => o.value === category);
-  const [selectedOption, setSelectedOption] = useState(obj.label);
 
   function listOfMeals(meals) {
     if (meals.length === 0) {
@@ -106,11 +104,7 @@ function SingleIngredient({ id }) {
       </Head>
       <h2 className="title">{CapatlizeFirstLetter(Ingredient.name)}</h2>
       <h3>Category</h3>
-      {/* <Select
-        defaultValue={selectedOption}
-        onChange={setSelectedOption}
-        options={options}
-      /> */}
+
       {CapatlizeFirstLetter(obj.label)}
       <h3>This ingredient is in the following meals:</h3>
       {listOfMeals(Ingredient.meal)}
