@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
+import Link from 'next/link';
 
 import { CapatlizeFirstLetter } from '../../lib/helpers';
 import {
@@ -56,8 +57,10 @@ function GroceryList({ groceryToComplete, groceryCompleted, me }) {
                 obj={obj}
               />
               <p>
-                {CapatlizeFirstLetter(grocery.ingredient.name)} -{' '}
-                {CapatlizeFirstLetter(grocery.amount.name)}
+                <Link href={`/ingredient?id=${grocery.ingredient.id}`}>
+                  {CapatlizeFirstLetter(grocery.ingredient.name)}
+                </Link>
+                {''}- {CapatlizeFirstLetter(grocery.amount.name)}
               </p>
             </IngredientListStyle>
           </Fragment>
@@ -76,8 +79,10 @@ function GroceryList({ groceryToComplete, groceryCompleted, me }) {
                   isComplete={true}
                 />
                 <p>
-                  {CapatlizeFirstLetter(grocery.ingredient.name)} -{' '}
-                  {CapatlizeFirstLetter(grocery.amount.name)}
+                  <Link href={`/ingredient?id=${grocery.ingredient.id}`}>
+                    {CapatlizeFirstLetter(grocery.ingredient.name)}
+                  </Link>{' '}
+                  - {CapatlizeFirstLetter(grocery.amount.name)}
                 </p>
               </IngredientListStyle>
             );
