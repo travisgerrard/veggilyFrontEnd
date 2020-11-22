@@ -86,11 +86,7 @@ function SingleIngredient({ id }) {
       return (
         <MealsList>
           {meals.map((meal) => {
-            return (
-              <IngredientListStyle key={meal.id}>
-                <Meal meal={meal} key={meal.id} />
-              </IngredientListStyle>
-            );
+            return <Meal meal={meal} key={meal.id} />;
           })}
         </MealsList>
       );
