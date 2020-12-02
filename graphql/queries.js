@@ -114,3 +114,25 @@ export const ADD_GROCERY_LIST = gql`
     }
   }
 `;
+
+// Meals.JS
+export const ALL_MEALS_QUERY = gql`
+  query ALL_MEALS_QUERY {
+    allMeals(orderBy: "createdAt_DESC") {
+      id
+      name
+      description
+      mealImage {
+        publicUrlTransformed
+      }
+    }
+  }
+`;
+
+export const SEARCH_FOR_MEALS = gql`
+  query SEARCH_FOR_MEALS($searchText: String) {
+    allMeals(where: { name_contains_i: $searchText }, sortBy: id_DESC) {
+      ...MealFragment
+    }
+  }
+`;

@@ -5,20 +5,7 @@ import gql from 'graphql-tag';
 import styled from 'styled-components';
 import Meal from './Meal';
 import Pagination from './Pagination';
-import { perPage } from '../config';
-
-const ALL_MEALS_QUERY = gql`
-  query ALL_MEALS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
-    allMeals(first: $first, skip: $skip, orderBy: "createdAt_DESC") {
-      id
-      name
-      description
-      mealImage {
-        publicUrlTransformed
-      }
-    }
-  }
-`;
+import { ALL_MEALS_QUERY } from '../graphql/queries';
 
 const Center = styled.div`
   text-align: center;
@@ -35,11 +22,7 @@ export const MealsList = styled.div`
 `;
 
 function Meals({ page, count }) {
-  const { data, error, loading } = useQuery(ALL_MEALS_QUERY, {
-    variables: {
-      skip: page * perPage - perPage,
-    },
-  });
+  const { data, error, loading } = useQuery(ALL_MEALS_QUERY);
   return (
     <Center>
       {(() => {
@@ -54,7 +37,7 @@ function Meals({ page, count }) {
           </MealsList>
         );
       })()}
-      <Pagination page={page} />
+      {/* <Pagination page={page} /> */}
     </Center>
   );
 }

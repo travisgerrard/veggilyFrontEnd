@@ -10,15 +10,23 @@ const CURRENT_USER_QUERY = gql`
       email
       name
       permissions
+      follows {
+        name
+        id
+      }
+      followers {
+        name
+        id
+      }
     }
   }
 `;
 
 function useUser() {
-    const { data, loading, error } = useQuery(CURRENT_USER_QUERY);
-    if (data) {
-      return data.authenticatedUser;
-    }
+  const { data, loading, error } = useQuery(CURRENT_USER_QUERY);
+  if (data) {
+    return data.authenticatedUser;
   }
-  
-  export { CURRENT_USER_QUERY, useUser };
+}
+
+export { CURRENT_USER_QUERY, useUser };

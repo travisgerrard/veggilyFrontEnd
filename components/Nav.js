@@ -1,9 +1,9 @@
-import Link from "next/link";
-import { useUser } from "./User";
-import NavStyles from "./styles/NavStyles";
-import HorizontalDivider from "./styles/HorizontalDivider";
+import Link from 'next/link';
+import { useUser } from './User';
+import NavStyles from './styles/NavStyles';
+import HorizontalDivider from './styles/HorizontalDivider';
 
-import Signout from "./Signout";
+import Signout from './Signout';
 
 function Nav() {
   const me = useUser();
@@ -11,6 +11,10 @@ function Nav() {
     <NavStyles data-testid="nav">
       {me && (
         <>
+          <Link href="/search">
+            <a>Search</a>
+          </Link>
+          <HorizontalDivider />
           <Link href="/grocery">
             <a>Grocery</a>
           </Link>
@@ -27,6 +31,10 @@ function Nav() {
       )}
       {!me && (
         <>
+          <Link href="/search">
+            <a>Search</a>
+          </Link>
+          <HorizontalDivider />
           <Link href="/signup">
             <a>Sign Up</a>
           </Link>
