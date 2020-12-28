@@ -13,7 +13,14 @@ export default function Meal({ meal }) {
     >
       <MealStyles>
         {meal.mealImage && (
-          <img src={meal.mealImage.publicUrlTransformed} alt={meal.name} />
+          <img
+            src={
+              meal.mealImage.publicUrlTransformed
+                ? meal.mealImage.publicUrlTransformed
+                : 'https://res.cloudinary.com/dehixvgdv/image/upload/v1598621202/veggily/5f490612c53b900a6dcdc484.png'
+            }
+            alt={meal.name}
+          />
         )}
 
         <div className="overlay">

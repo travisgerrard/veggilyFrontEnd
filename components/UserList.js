@@ -84,8 +84,6 @@ function UserList() {
       <div>Follows</div>
       <div>Following You</div>
       {allUsers.map((user) => {
-        const isFollowing = follows.some((e) => e.id === user.id);
-
         if (user.id === me.id) {
           return null;
         }

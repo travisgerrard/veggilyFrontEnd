@@ -68,7 +68,14 @@ function SingleMeal({ id }) {
           <title>Veggily | {Meal.name}</title>
         </Head>
         <TopOfMeal>
-          <img src={Meal.mealImage.publicUrlTransformed} alt={Meal.name} />
+          <img
+            src={
+              Meal.mealImage
+                ? Meal.mealImage.publicUrlTransformed
+                : 'https://res.cloudinary.com/dehixvgdv/image/upload/v1598621202/veggily/5f490612c53b900a6dcdc484.png'
+            }
+            alt={Meal.name}
+          />
           <div className="overlay">
             <h2 className="title">{Meal.name}</h2>
             <p className="subtitle">{Meal.description}</p>
